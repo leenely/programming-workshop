@@ -11,11 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Go into lab-1
-        run: cd lab-1
+      # Без установки зависимостей почему-то не работает
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y clang-format make
 
       - name: Check formatting
+        working-directory: lab-1
         run: make check_fmt
 
       - name: Run tests
+        working-directory: lab-1
         run: make run_tests
