@@ -2,11 +2,7 @@ name: lab-1 ci-pipeline
 
 on:
   push:
-    paths:
-      - 'lab-1/**'
   pull_request:
-    paths:
-      - 'lab-1/**'
 
 jobs:
   build:
@@ -15,10 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Go into lab-1
+        run: cd lab-1
+
       - name: Check formatting
-        working-directory: lab-1
         run: make check_fmt
 
       - name: Run tests
-        working-directory: lab-1
         run: make run_tests
