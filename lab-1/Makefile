@@ -1,7 +1,7 @@
 # -- Утилиты
 
 clear:
-	rm -rf *.o *.a *_test
+	rm -rf *.o *.a *_test integral quadratic list stack
 
 fmt:
 	clang-format -style=LLVM -i `find -regex ".+\.[ch]"`
@@ -75,3 +75,25 @@ run_tests: quadratic_test integral_test list_test stack_test
 	./integral_test
 	./list_test
 	./stack_test
+
+
+# -- Сборка бинарников без тестов
+
+integral: integral.o integral.a
+	gcc -g -static -o integral integral.o integral.a
+	./integral
+
+
+quadratic: quadratic.o quadratic.a
+	gcc -g -static -o quadratic quadratic.o quadratic.a
+	./quadratic
+
+
+list: list.o list.a
+	gcc -g -static -o list list.o list.a
+	./list
+
+
+stack: stack.o stack.a
+	gcc -g -static -o stack stack.o stack.a
+	./stack
