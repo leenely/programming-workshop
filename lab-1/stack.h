@@ -1,5 +1,4 @@
-// Стек на основе массива
-#define SIZE 100
+#define SIZE 10
 
 typedef struct {
   int array[SIZE];
