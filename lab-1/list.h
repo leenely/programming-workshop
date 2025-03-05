@@ -1,11 +1,11 @@
 typedef struct node {
-    struct node *link;
-    int item;       
+  struct node *link;
+  int item;
 } node;
 
 typedef struct single_list {
-    node *head;
-    node *tail;
+  node *head;
+  node *tail;
 } single_list;
 
 int init_single_list(single_list *list);
