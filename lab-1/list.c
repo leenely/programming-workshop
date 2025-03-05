@@ -1,18 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct node {
-    struct node *link;
-    int item;       
-} node;
-
-typedef struct single_list {
-    node *head;
-    node *tail;
-} single_list;
+#include "list.h"
+#include <assert.h>
 
 
 int init_single_list(single_list *list) {
+    if (list == NULL) return -1;
     list->head = list->tail = NULL;
     return 0;
 }
@@ -41,7 +34,11 @@ int add_to_end(single_list *list, int number) {
 
     new_node->item = number;
     new_node->link = NULL;
-    list->tail->link = new_node;
+    if (list->tail == NULL) {
+        list->head = new_node;
+    } else {
+        list->tail->link = new_node;
+    }
     list->tail = new_node;
     return 0;
 }
