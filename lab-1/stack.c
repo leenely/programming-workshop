@@ -1,14 +1,18 @@
 // Стек на основе массива
 #include "stack.h"
 #include <stdio.h>
-#define SIZE 10
+#include <stdlib.h>
 
-void init(stack *stack) { stack->head = -1; }
+void init(stack *stack, int size) {
+  stack->head = -1;
+  stack->size = size;
+  stack->array = (int *)malloc(sizeof(int) * size);
+}
 
 int is_empty(stack *stack) { return stack->head == -1; }
 
 void push(stack *stack, int value) {
-  if (stack->head + 1 >= SIZE) {
+  if (stack->head + 1 >= stack->size) {
     printf("Стек переполнен\n");
     return;
   }

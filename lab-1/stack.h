@@ -1,11 +1,10 @@
-#define SIZE 10
-
 typedef struct {
-  int array[SIZE];
+  int *array;
   int head;
+  int size;
 } stack;
 
-void init(stack *stack);
+void init(stack *stack, int size);
 
 int is_empty(stack *stack);
 
