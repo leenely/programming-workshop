@@ -1,6 +1,5 @@
 #include "quadratic.h"
 #include <math.h>
-#include <stdio.h>
 
 double get_accuracy(double value, int accuracy) {
   double pow_10 = pow(10, accuracy);
