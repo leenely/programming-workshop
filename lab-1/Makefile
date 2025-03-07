@@ -20,7 +20,7 @@ quadratic.a: quadratic.o
 
 
 integral.o: integral.c integral.h
-	gcc -g -c integral.c -o integral.o
+	gcc -g -c integral.c -o integral.o -lm
 
 integral.a: integral.o
 	ar rc integral.a integral.o -lm
@@ -50,7 +50,7 @@ quadratic_test: quadratic_test.o quadratic.a
 
 
 integral_test.o: tests/integral_test.c integral.h
-	gcc -g -c tests/integral_test.c -o integral_test.o 
+	gcc -g -c tests/integral_test.c -o integral_test.o -lm
 
 integral_test: integral_test.o integral.a
 	gcc -g -static -o integral_test integral_test.o integral.a -lm
