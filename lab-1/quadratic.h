@@ -1,1 +1,1 @@
-// Вычисление корней квадратного уравнения
+int calculate(double a, double b, double c, double roots[2], int accuracy);
