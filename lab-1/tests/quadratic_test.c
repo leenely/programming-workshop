@@ -1,9 +1,10 @@
 #include "../quadratic.h"
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
-int compare(double a, double b, double epsilon) {
+bool compare(double a, double b, double epsilon) {
   if (epsilon == 0) {
     epsilon = 1E-7;
   }
@@ -89,5 +90,5 @@ int main() {
   test5();
   test6();
   test7();
-  return 1;
+  return 0;
 }
