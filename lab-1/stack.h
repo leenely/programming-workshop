@@ -1,7 +1,10 @@
+#include <stdbool.h>
+
 typedef struct {
   int *array;
   int head;
   int size;
+  int is_empty;
 } stack;
 
 void init(stack *stack, int size);

@@ -74,10 +74,9 @@ void test_negative_numbers() {
   init(&stack, 10);
 
   push(&stack, -1);
-  pop(&stack);
-  bool result = is_empty(&stack);
+  int result = peek(&stack);
 
-  assert(result == true);
+  assert(result == -1);
   free(stack.array);
 }
 
