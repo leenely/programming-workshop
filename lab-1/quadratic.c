@@ -28,9 +28,9 @@ int calculate(double a, double b, double c, double roots[2], int accuracy) {
   } else {
     double x1 = (-b - sqrt(discriminant)) / (2 * a);
     double x2 = (-b + sqrt(discriminant)) / (2 * a);
-    if (fabs(x1) < 1E-10) {
+    if (fabs(x1) < accuracy) {
       x1 = c / (a * x2);
-    } else if (fabs(x2) < 1E-10) {
+    } else if (fabs(x2) < accuracy) {
       x2 = c / (a * x1);
     }
     roots[0] = get_accuracy(x1, accuracy);
