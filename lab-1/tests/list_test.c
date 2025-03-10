@@ -9,7 +9,6 @@ void test_init_single_list() {
 
   assert(list.head == NULL);
   assert(list.tail == NULL);
-  printf("test_init_single_list passed!\n");
 }
 
 void test_add_to_beginning() {
@@ -23,8 +22,6 @@ void test_add_to_beginning() {
   add_to_beginning(&list, 20);
   assert(list.head->item == 20);
   assert(list.tail->item == 10);
-
-  printf("test_add_to_beginning passed!\n");
 }
 
 void test_add_to_end() {
@@ -38,8 +35,6 @@ void test_add_to_end() {
   add_to_end(&list, 20);
   assert(list.head->item == 10);
   assert(list.tail->item == 20);
-
-  printf("test_add_to_end passed!\n");
 }
 
 void test_add_to_middle() {
@@ -53,8 +48,6 @@ void test_add_to_middle() {
   add_to_middle(&list, 1, 15);
   assert(find_element(&list, 1) == 15);
   assert(find_element(&list, 2) == 20);
-
-  printf("test_add_to_middle passed!\n");
 }
 
 void test_find_element() {
@@ -68,8 +61,6 @@ void test_find_element() {
   assert(find_element(&list, 0) == 10);
   assert(find_element(&list, 1) == 20);
   assert(find_element(&list, 2) == 30);
-
-  printf("test_find_element passed!\n");
 }
 
 void test_delete_last() {
@@ -89,8 +80,6 @@ void test_delete_last() {
   delete_last(&list);
   assert(list.head == NULL);
   assert(list.tail == NULL);
-
-  printf("test_delete_last passed!\n");
 }
 
 void test_count_elements() {
@@ -107,8 +96,6 @@ void test_count_elements() {
 
   delete_last(&list);
   assert(count_elements(&list) == 2);
-
-  printf("test_count_elements passed!\n");
 }
 
 int main() {
