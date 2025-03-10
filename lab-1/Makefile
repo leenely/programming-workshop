@@ -13,17 +13,17 @@ check_fmt:
 # -- Сборка статических библиотек
 
 quadratic.o: quadratic.c quadratic.h
-	gcc -g -c quadratic.c -o quadratic.o -lm
+	gcc -g -c quadratic.c -o quadratic.o
 
 quadratic.a: quadratic.o
-	ar rc quadratic.a quadratic.o -lm
+	ar rc quadratic.a quadratic.o
 
 
 integral.o: integral.c integral.h
-	gcc -g -c integral.c -o integral.o -lm
+	gcc -g -c integral.c -o integral.o
 
 integral.a: integral.o
-	ar rc integral.a integral.o -lm
+	ar rc integral.a integral.o
 
 
 list.o: list.c list.h
@@ -43,17 +43,17 @@ stack.a: stack.o
 # -- Сборка тестов
 
 quadratic_test.o: tests/quadratic_test.c quadratic.h
-	gcc -g -c tests/quadratic_test.c -o quadratic_test.o -lm
+	gcc -g -c tests/quadratic_test.c -o quadratic_test.o
 
 quadratic_test: quadratic_test.o quadratic.a
-	gcc -g -static -o quadratic_test quadratic_test.o quadratic.a -lm
+	gcc -g -static -o quadratic_test quadratic_test.o quadratic.a 
 
 
 integral_test.o: tests/integral_test.c integral.h
-	gcc -g -c tests/integral_test.c -o integral_test.o -lm
+	gcc -g -c tests/integral_test.c -o integral_test.o
 
 integral_test: integral_test.o integral.a
-	gcc -g -static -o integral_test integral_test.o integral.a -lm
+	gcc -g -static -o integral_test integral_test.o integral.a 
 
 
 list_test.o: tests/list_test.c list.h
@@ -80,12 +80,12 @@ run_tests: quadratic_test integral_test list_test stack_test
 # -- Сборка бинарников без тестов
 
 integral: integral.o integral.a
-	gcc -g -static -o integral integral.o integral.a -lm
+	gcc -g -static -o integral integral.o integral.a
 	./integral
 
 
 quadratic: quadratic.o quadratic.a
-	gcc -g -static -o quadratic quadratic.o quadratic.a -lm
+	gcc -g -static -o quadratic quadratic.o quadratic.a
 	./quadratic
 
 
