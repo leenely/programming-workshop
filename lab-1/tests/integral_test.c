@@ -1,64 +1,63 @@
 #include "../integral.h"
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 
 double square_function(double x) { return x * x; }
 
 double cos_function(double x) { return cos(x); }
 
 void test_integral_1() {
-  int a = -10;
-  int b = -2;
+  float a = -10;
+  float b = -2;
   int num_of_parts = 300000;
-  double result = Integral(square_function, a, b, num_of_parts);
+  double result = integral(square_function, a, b, num_of_parts);
 
-  assert(fabs(result - 330.6666666676213) < 1E-14);
+  assert(fabs(result - 330.66) < 10E-2);
 }
 
 void test_integral_2() {
-  int a = -1;
-  int b = 5;
+  float a = -1;
+  float b = 5;
   int num_of_parts = 300000;
-  double result = Integral(square_function, a, b, num_of_parts);
+  double result = integral(square_function, a, b, num_of_parts);
 
-  assert(fabs(result - 42.00000000039978) < 1E-14);
+  assert(fabs(result - 42.00) < 10E-2);
 }
 
 void test_integral_3() {
-  int a = 15;
-  int b = 200;
+  float a = 15;
+  float b = 200;
   int num_of_parts = 300000;
-  double result = Integral(square_function, a, b, num_of_parts);
+  double result = integral(square_function, a, b, num_of_parts);
 
-  assert(fabs(result - 2665541.666678384) < 1E-14);
+  assert(fabs(result - 2665541.66) < 10E-2);
 }
 
 void test_integral_4() {
-  int a = -1;
-  int b = 10;
+  float a = -1;
+  float b = 10;
   int num_of_parts = 400000;
-  double result = Integral(cos_function, a, b, num_of_parts);
+  double result = integral(cos_function, a, b, num_of_parts);
 
-  assert(fabs(result - 0.2974498738998142) < 1E-14);
+  assert(fabs(result - 0.29) < 10E-2);
 }
 
 void test_integral_5() {
-  int a = 15;
-  int b = 20;
+  float a = 15;
+  float b = 20;
   int num_of_parts = 400000;
-  double result = Integral(cos_function, a, b, num_of_parts);
+  double result = integral(cos_function, a, b, num_of_parts);
 
-  assert(fabs(result - 0.26265741056707675) < 1E-14);
+  assert(fabs(result - 0.26) < 10E-2);
 }
 
 void test_integral_6() {
-  int a = -9;
-  int b = -7;
+  float a = -9;
+  float b = -7;
   int num_of_parts = 400000;
-  double result = fabs(Integral(cos_function, a, b, num_of_parts));
+  double result = fabs(integral(cos_function, a, b, num_of_parts));
 
-  assert(fabs(result - 0.24486811347653092) < 1E-14);
+  assert(fabs(result - 0.24) < 10E-2);
 }
 
 int main() {

@@ -1,8 +1,7 @@
-#include <assert.h>
 #include <math.h>
-#include <stdio.h>
 
-double Integral(double (*function)(double), int a, int b, int num_of_parts) {
+double integral(double (*function)(double), float a, float b,
+                int num_of_parts) {
   double part = (b - a) / (double)num_of_parts;
   double res = 0;
 

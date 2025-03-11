@@ -1,1 +1,1 @@
-double Integral(double (*function)(double), int a, int b, int num_of_parts);
+double integral(double (*function)(double), float a, float b, int num_of_parts);
