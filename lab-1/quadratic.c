@@ -15,7 +15,7 @@ int sign(double value) {
     return 0;
 }
 
-int calculate(double a, double b, double c, double roots[2], int accuracy) {
+int calculate(double a, double b, double c, double *roots, int accuracy) {
   if (accuracy == 0) {
     accuracy = 14;
   }
