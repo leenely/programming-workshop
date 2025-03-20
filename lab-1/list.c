@@ -1,6 +1,5 @@
 #include "list.h"
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 int init_single_list(single_list *list) {
