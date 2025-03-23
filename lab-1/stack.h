@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#define SUCCESS_CODE 0
 #define STACKOVERFLOW_ERRCODE -1
 #define STACKUNDERFLOW_ERRCODE -2
 
@@ -17,6 +18,6 @@ bool is_full(stack *stack);
 
 int push(stack *stack, int value);
 
-int pop(stack *stack);
+int pop(stack *stack, int *output);
 
-int peek(stack *stack);
+int peek(stack *stack, int *output);

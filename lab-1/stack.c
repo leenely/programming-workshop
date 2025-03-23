@@ -21,19 +21,21 @@ int push(stack *stack, int value) {
   stack->array[stack->head] = value;
 }
 
-int pop(stack *stack) {
+int pop(stack *stack, int *output) {
   if (is_empty(stack)) {
     return STACKUNDERFLOW_ERRCODE;
   }
 
   stack->head = stack->head - 1;
-  return stack->array[stack->head];
+  *output = stack->array[stack->head];
+  return SUCCESS_CODE; // Обходим конфликт с кодами ошибок
 }
 
-int peek(stack *stack) {
+int peek(stack *stack, int *output) {
   if (is_empty(stack)) {
     return STACKUNDERFLOW_ERRCODE;
   }
 
-  return stack->array[stack->head];
+  *output = stack->array[stack->head];
+  return SUCCESS_CODE;
 }
