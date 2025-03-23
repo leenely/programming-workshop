@@ -12,7 +12,7 @@ int is_empty(stack *stack) { return stack->is_empty; }
 
 void push(stack *stack, int value) {
   if (stack->head + 1 >= stack->size) {
-    return;
+    return STACKOVERFLOW_ERRCODE;
   }
 
   stack->head = stack->head + 1;
@@ -22,7 +22,7 @@ void push(stack *stack, int value) {
 
 void pop(stack *stack) {
   if (is_empty(stack)) {
-    return;
+    return STACKUNDERFLOW_ERRCODE;
   }
 
   stack->head = stack->head - 1;
@@ -33,7 +33,7 @@ void pop(stack *stack) {
 
 int peek(stack *stack) {
   if (is_empty(stack)) {
-    return -1;
+    return STACKUNDERFLOW_ERRCODE;
   }
 
   return stack->array[stack->head];

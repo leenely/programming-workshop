@@ -1,5 +1,6 @@
 #include <stdbool.h>
-
+#define STACKOVERFLOW_ERRCODE -1
+#define STACKUNDERFLOW_ERRCODE -2
 typedef struct {
   int *array;
   int head;
