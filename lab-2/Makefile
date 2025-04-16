@@ -48,8 +48,8 @@ arraylist_test: arraylist_test.o arraylist.a
 hashtable_test.o: tests/hashtable_test.c hashtable.h
 	gcc -g -c tests/hashtable_test.c -o hashtable_test.o -lm
 
-hashtable_test: hashtable_test.o hashtable.a
-	gcc -g -static -o hashtable_test hashtable_test.o hashtable.a -lm
+hashtable_test: hashtable_test.o hashtable.a pool_alloc.a
+	gcc -g -o hashtable_test hashtable_test.o hashtable.a pool_alloc.a -lm
 
 linear_alloc_test.o: tests/linear_alloc_test.c linear_alloc.h
 	gcc -g -c tests/linear_alloc_test.c -o linear_alloc_test.o -lm
