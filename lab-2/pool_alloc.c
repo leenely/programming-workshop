@@ -44,4 +44,3 @@ void pool_deinit(PoolAllocator *allocator) {
     allocator->pool_size = 0;
   }
 }
-
