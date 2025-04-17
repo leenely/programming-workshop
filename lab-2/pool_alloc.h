@@ -1,6 +1,4 @@
-#ifndef POOL_ALLOC_H
 #define POOL_ALLOC_H
-
 #include <stddef.h>
 
 typedef struct FreeBlock FreeBlock;
@@ -22,4 +20,3 @@ void *pool_alloc(PoolAllocator *allocator);
 void pool_free(PoolAllocator *allocator, void *ptr);
 void pool_deinit(PoolAllocator *allocator);
 
-#endif
