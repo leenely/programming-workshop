@@ -28,7 +28,7 @@ int pop(stack *stack, int *output) {
 
   stack->head = stack->head - 1;
   *output = stack->array[stack->head];
-  return SUCCESS_CODE; // Обходим конфликт с кодами ошибок
+  return SUCCESS_CODE;
 }
 
 int peek(stack *stack, int *output) {
