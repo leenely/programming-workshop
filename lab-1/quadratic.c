@@ -1,9 +1,8 @@
 #include "quadratic.h"
 #include <math.h>
 
-double get_accuracy(double value, int accuracy) {
-  double pow_10 = pow(10, accuracy);
-  return round(value * pow_10) / pow_10;
+int compare(double a, double b, double epsilon) {
+  return fabs(a - b) < epsilon;
 }
 
 int sign(double value) {
@@ -15,21 +14,18 @@ int sign(double value) {
     return 0;
 }
 
-int calculate(double a, double b, double c, double *roots, int accuracy) {
-  if (accuracy == 0) {
-    accuracy = 14;
-  }
-  if (a == 0) {
-    return -1;
+int calculate(double a, double b, double c, double *roots) {
+  if (compare(a, 0, default_accuracy)) {
+    return NOT_A_QUADRATIC;
   }
   double discriminant = b * b - 4 * a * c;
-  discriminant = get_accuracy(discriminant, 7);
-  if (discriminant < 0) {
-    return 0;
-  } else if (discriminant == 0) {
+
+  if (discriminant < -default_accuracy) {
+    return ZERO_ROOTS;
+  } else if (compare(discriminant, 0, default_accuracy)) {
     double x = -b / (2 * a);
-    roots[0] = get_accuracy(x, accuracy);
-    return 1;
+    roots[0] = x;
+    return ONE_ROOT;
   } else {
     double x1;
     double x2;
@@ -37,11 +33,11 @@ int calculate(double a, double b, double c, double *roots, int accuracy) {
       x1 = (-b - sqrt(discriminant)) / (2 * a);
       x2 = (-b + sqrt(discriminant)) / (2 * a);
     } else {
-      x2 = -(b + sign(b) * sqrt(discriminant)) / 2 * a;
-      x1 = c / x2;
+      x2 = -(b + sign(b) * sqrt(discriminant)) / (2 * a);
+      x1 = c / (a * x2);
     }
-    roots[0] = get_accuracy(x1, accuracy);
-    roots[1] = get_accuracy(x2, accuracy);
-    return 2;
+    roots[0] = x1;
+    roots[1] = x2;
+    return TWO_ROOTS;
   }
 }
