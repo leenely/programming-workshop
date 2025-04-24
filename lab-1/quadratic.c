@@ -14,19 +14,17 @@ int sign(double value) {
     return 0;
 }
 
-int calculate(double a, double b, double c, double *roots) {
-  if (compare(a, 0, default_accuracy)) {
+int calculate(double a, double b, double c, double *roots, double accuracy) {
+  if (compare(a, 0, accuracy)) {
     return NOT_A_QUADRATIC;
   }
   double discriminant = b * b - 4 * a * c;
 
-  if (discriminant < -default_accuracy) {
-    return ZERO_ROOTS;
-  } else if (compare(discriminant, 0, default_accuracy)) {
+  if (compare(discriminant, 0, accuracy)) {
     double x = -b / (2 * a);
     roots[0] = x;
     return ONE_ROOT;
-  } else {
+  } else if (discriminant > 0) {
     double x1;
     double x2;
     if (b * b / fabs(4 * a * c) <= 10) {
@@ -39,5 +37,7 @@ int calculate(double a, double b, double c, double *roots) {
     roots[0] = x1;
     roots[1] = x2;
     return TWO_ROOTS;
+  } else {
+    return ZERO_ROOTS;
   }
 }
