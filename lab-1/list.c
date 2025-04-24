@@ -69,7 +69,7 @@ int add_to_middle(single_list *list, int position, int number) {
   }
   if (current == NULL) {
     free(new_node);
-    return AMPTYLISTEXCEPTION_ERRCODE;
+    return EMPTYLISTEXCEPTION_ERRCODE;
   }
 
   new_node->link = current->link;
@@ -124,6 +124,6 @@ int find_element(single_list *list, int position) {
     count++;
   }
   if (current == NULL)
-    return AMPTYLISTEXCEPTION_ERRCODE;
+    return EMPTYLISTEXCEPTION_ERRCODE;
   return current->item;
 }
