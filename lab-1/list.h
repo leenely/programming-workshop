@@ -1,3 +1,8 @@
+#define SUCCESS_CODE 0
+#define NULLPOINTEREXCEPTION_ERRCODE -1
+#define MEMORYALLOCATIONEXCEPTION_ERRCODE -2
+#define AMPTYLISTEXCEPTION_ERRCODE -3
+
 typedef struct node {
   struct node *link;
   int item;
@@ -5,7 +10,6 @@ typedef struct node {
 
 typedef struct single_list {
   node *head;
-  node *tail;
 } single_list;
 
 int init_single_list(single_list *list);
