@@ -88,6 +88,17 @@ void test_count_elements() {
   assert(count_elements(&list) == 2);
 }
 
+void test_nullpointerexeption() {
+  single_list list;
+  init_single_list(&list);
+  assert(find_element(&list, 0) == NULLPOINTEREXCEPTION_ERRCODE);
+}
+
+void test_emptylistexeption() {
+  single_list list;
+  assert(add_to_middle(&list, -1, 1) == EMPTYLISTEXCEPTION_ERRCODE);
+}
+
 int main() {
   test_init_single_list();
   test_add_to_beginning();
@@ -96,5 +107,7 @@ int main() {
   test_find_element();
   test_delete_last();
   test_count_elements();
-  return SUCCESS_CODE;
+  test_nullpointerexeption();
+  test_emptylistexeption();
+  return 0;
 }
