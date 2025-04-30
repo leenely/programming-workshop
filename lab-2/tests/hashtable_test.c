@@ -1,7 +1,6 @@
 #include "../hashtable.h"
 #include "../pool_alloc.h"
 #include <assert.h>
-#include <stdio.h>
 
 void test_basic_insert_get() {
   PoolAllocator alloc;
