@@ -5,7 +5,7 @@ typedef struct HashElem HashElem;
 typedef struct HashTable HashTable;
 
 struct HashElem {
-  char *key;
+  char const *key;
   void *value;
   HashElem *next;
 };

@@ -59,7 +59,7 @@ void hashtable_insert(HashTable *table, const char *key, void *value) {
 
   HashElem *elem = table->buckets[index];
   while (elem != NULL) {
-    if (strcmp(elem->key, key) == 0) {
+    if (elem->key == key) {
       elem->value = value;
       return;
     }
@@ -67,7 +67,7 @@ void hashtable_insert(HashTable *table, const char *key, void *value) {
   }
 
   HashElem *new_elem = pool_alloc(table->allocator);
-  new_elem->key = strdup(key);
+  new_elem->key = key;
   new_elem->value = value;
   new_elem->next = table->buckets[index];
   table->buckets[index] = new_elem;
@@ -79,7 +79,7 @@ void *hashtable_get(HashTable *table, const char *key) {
 
   HashElem *elem = table->buckets[index];
   while (elem != NULL) {
-    if (strcmp(elem->key, key) == 0) {
+    if (elem->key == key) {
       return elem->value;
     }
     elem = elem->next;
@@ -95,13 +95,12 @@ void hashtable_del(HashTable *table, const char *key) {
   HashElem *elem = table->buckets[index];
 
   while (elem != NULL) {
-    if (strcmp(elem->key, key) == 0) {
+    if (elem->key == key) {
       if (prev == NULL) {
         table->buckets[index] = elem->next;
       } else {
         prev->next = elem->next;
       }
-      free(elem->key);
       pool_free(table->allocator, elem);
       return;
     }
@@ -115,7 +114,6 @@ void hashtable_free(HashTable *table) {
     HashElem *elem = table->buckets[i];
     while (elem != NULL) {
       HashElem *next = elem->next;
-      free(elem->key);
       pool_free(table->allocator, elem);
       elem = next;
     }
