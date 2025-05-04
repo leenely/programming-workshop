@@ -6,12 +6,10 @@ int compare(double a, double b, double epsilon) {
 }
 
 int sign(double value) {
-  if (value > 0)
+  if (value >= 0)
     return 1;
-  else if (value < 0)
-    return -1;
   else
-    return 0;
+    return -1;
 }
 
 int calculate(double a, double b, double c, double *roots, double accuracy) {
@@ -24,18 +22,18 @@ int calculate(double a, double b, double c, double *roots, double accuracy) {
     double x = -b / (2 * a);
     roots[0] = x;
     return ONE_ROOT;
-  } else if (discriminant > 0) {
+  } else if (discriminant > accuracy) {
     double x1;
     double x2;
-    if (b * b / fabs(4 * a * c) <= 10) {
-      x1 = (-b - sqrt(discriminant)) / (2 * a);
-      x2 = (-b + sqrt(discriminant)) / (2 * a);
+    x2 = -(b + sign(b) * sqrt(discriminant)) / (2 * a);
+    x1 = c / (a * x2);
+    if (x1 < x2) {
+      roots[0] = x1;
+      roots[1] = x2;
     } else {
-      x2 = -(b + sign(b) * sqrt(discriminant)) / (2 * a);
-      x1 = c / (a * x2);
+      roots[0] = x2;
+      roots[1] = x1;
     }
-    roots[0] = x1;
-    roots[1] = x2;
     return TWO_ROOTS;
   } else {
     return ZERO_ROOTS;
