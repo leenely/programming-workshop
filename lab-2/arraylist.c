@@ -1,95 +1,66 @@
 #include "arraylist.h"
+#include "pool_alloc.c"
+#include "pool_alloc.h"
+#include <assert.h>
+#include <string.h>
 
 void arraylist_init(ArrayList *list, PoolAllocator *allocator) {
-  if (!list || !allocator)
-    return NULLPOINTEREXCEPTION_ERRCODE;
-
-  list->data = NULL;
-  list->size = 0;
-  list->capacity = 0;
   list->allocator = allocator;
-  return SUCCESS_CODE;
+  list->size = 0;
+  list->capacity = 4;
+  list->data = (void **)pool_alloc(allocator);
+  if (!list->data) {
+    return;
+  }
 }
 
 void arraylist_add(ArrayList *list, void *data, size_t index) {
-  if (!list || !list->allocator)
-    return NULLPOINTEREXCEPTION_ERRCODE;
   if (index > list->size)
-    return INDEXOUTOFRANGEEXCEPTION_ERRCODE;
+    return;
 
-  if (list->size >= list->capacity) {
-    size_t new_capacity = list->capacity == 0 ? 4 : list->capacity * 2;
-    void **new_data = pool_allocator_reallocate(list->allocator, list->data,
-                                                list->capacity * sizeof(void *),
-                                                new_capacity * sizeof(void *));
-
+  if (list->size == list->capacity) {
+    size_t new_capacity = list->capacity * 2;
+    void *new_data = (void *)pool_alloc(list->allocator);
     if (!new_data)
-      return MEMORYALLOCATIONEXCEPTION_ERRCODE;
+      return;
+
+    memcpy(new_data, list->data, index * sizeof(void *));
+    memcpy(new_data + index + 1, list->data + index,
+           (list->size - index) * sizeof(void *));
+
+    pool_free(list->allocator, list->data);
 
     list->data = new_data;
     list->capacity = new_capacity;
-  }
-
-  if (index < list->size) {
-    memmove(&list->data[index + 1], &list->data[index],
+  } else {
+    memmove(list->data + index + 1, list->data + index,
             (list->size - index) * sizeof(void *));
   }
 
   list->data[index] = data;
   list->size++;
-  return SUCCESS_CODE;
 }
 
 void *arraylist_get(ArrayList *list, size_t index) {
-  if (!list)
-    return NULLPOINTEREXCEPTION_ERRCODE;
-  if (list->size == 0)
-    return EMPTYLISTEXCEPTION_ERRCODE;
   if (index >= list->size)
-    return INDEXOUTOFRANGEEXCEPTION_ERRCODE;
+    return NULL;
   return list->data[index];
 }
 
 void arraylist_del(ArrayList *list, size_t index) {
-  if (!list)
-    return NULLPOINTEREXCEPTION_ERRCODE;
-  if (list->size == 0)
-    return EMPTYLISTEXCEPTION_ERRCODE;
   if (index >= list->size)
-    return INDEXOUTOFRANGEEXCEPTION_ERRCODE;
+    return;
 
-  if (index < list->size - 1) {
-    memmove(&list->data[index], &list->data[index + 1],
-            (list->size - index - 1) * sizeof(void *));
-  }
-
+  memmove(list->data + index, list->data + index + 1,
+          (list->size - index - 1) * sizeof(void *));
   list->size--;
-
-  if (list->size < list->capacity / 4 && list->capacity > 4) {
-    size_t new_capacity = list->capacity / 2;
-    void **new_data = pool_allocator_reallocate(list->allocator, list->data,
-                                                list->capacity * sizeof(void *),
-                                                new_capacity * sizeof(void *));
-
-    if (new_data) {
-      list->data = new_data;
-      list->capacity = new_capacity;
-    }
-  }
-  return SUCCESS_CODE;
 }
 
 void arraylist_free(ArrayList *list) {
-  if (!list)
-    return NULLPOINTEREXCEPTION_ERRCODE;
-
-  if (list->data) {
-    pool_allocator_deallocate(list->allocator, list->data,
-                              list->capacity * sizeof(void *));
-
-    list->data = NULL;
-    list->size = 0;
-    list->capacity = 0;
+  if (list->allocator && list->data) {
+    pool_free(list->allocator, list->data);
   }
-  return SUCCESS_CODE;
+  list->data = NULL;
+  list->size = 0;
+  list->capacity = 0;
 }

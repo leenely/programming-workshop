@@ -1,10 +1,7 @@
-#include "pool_alloc.h"
+#ifndef ARRAYLIST_H
+#define ARRAYLIST_H
 
-#define SUCCESS_CODE 0
-#define NULLPOINTEREXCEPTION_ERRCODE -1
-#define MEMORYALLOCATIONEXCEPTION_ERRCODE -2
-#define EMPTYLISTEXCEPTION_ERRCODE -3
-#define INDEXOUTOFRANGEEXCEPTION_ERRCODE -4
+#include "pool_alloc.h"
 
 typedef struct {
   void **data;
@@ -22,3 +19,4 @@ void *arraylist_get(ArrayList *list, size_t index);
 void arraylist_del(ArrayList *list, size_t index);
 
 void arraylist_free(ArrayList *list);
+#endif
