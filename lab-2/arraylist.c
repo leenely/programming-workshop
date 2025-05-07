@@ -1,66 +1,57 @@
 #include "arraylist.h"
-#include "pool_alloc.c"
-#include "pool_alloc.h"
+#include "linear_alloc.h"
 #include <assert.h>
 #include <string.h>
 
-void arraylist_init(ArrayList *list, PoolAllocator *allocator) {
-  list->allocator = allocator;
-  list->size = 0;
-  list->capacity = 4;
-  list->data = (void **)pool_alloc(allocator);
-  if (!list->data) {
-    return;
-  }
+static void arraylist_grow(ArrayList *list) {
+  size_t new_capacity = list->capacity * 2;
+  void **new_data =
+      linear_alloc(list->allocator, sizeof(void *) * new_capacity);
+  assert(new_data && "Failed to grow array");
+
+  memcpy(new_data, list->data, sizeof(void *) * list->size);
+  list->data = new_data;
+  list->capacity = new_capacity;
 }
 
-void arraylist_add(ArrayList *list, void *data, size_t index) {
-  if (index > list->size)
-    return;
+void arraylist_init(ArrayList *list, linear_allocator *allocator) {
+  list->allocator = allocator;
+  list->capacity = 4;
+  list->size = 0;
+
+  list->data = linear_alloc(allocator, sizeof(void *) * list->capacity);
+  assert(list->data && "Failed to allocate initial array");
+}
+
+void arraylist_add(ArrayList *list, void *element, size_t index) {
+  assert(index <= list->size && "Index out of bounds");
 
   if (list->size == list->capacity) {
-    size_t new_capacity = list->capacity * 2;
-    void *new_data = (void *)pool_alloc(list->allocator);
-    if (!new_data)
-      return;
-
-    memcpy(new_data, list->data, index * sizeof(void *));
-    memcpy(new_data + index + 1, list->data + index,
-           (list->size - index) * sizeof(void *));
-
-    pool_free(list->allocator, list->data);
-
-    list->data = new_data;
-    list->capacity = new_capacity;
-  } else {
-    memmove(list->data + index + 1, list->data + index,
-            (list->size - index) * sizeof(void *));
+    arraylist_grow(list);
   }
 
-  list->data[index] = data;
+  memmove(list->data + index + 1, list->data + index,
+          sizeof(void *) * (list->size - index));
+  list->data[index] = element;
   list->size++;
 }
 
 void *arraylist_get(ArrayList *list, size_t index) {
-  if (index >= list->size)
-    return NULL;
+  assert(index < list->size && "Index out of bounds");
   return list->data[index];
 }
 
 void arraylist_del(ArrayList *list, size_t index) {
-  if (index >= list->size)
-    return;
+  assert(index < list->size && "Index out of bounds");
 
   memmove(list->data + index, list->data + index + 1,
-          (list->size - index - 1) * sizeof(void *));
+          sizeof(void *) * (list->size - index - 1));
   list->size--;
 }
 
 void arraylist_free(ArrayList *list) {
-  if (list->allocator && list->data) {
-    pool_free(list->allocator, list->data);
-  }
   list->data = NULL;
   list->size = 0;
   list->capacity = 0;
+  list->allocator = NULL;
 }
