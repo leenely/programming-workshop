@@ -1,5 +1,5 @@
 #include "../linear_alloc.h"
-#include <assert.h>
+#include "assert.h"
 
 void test_linaer_alloc_init() {
   size_t size = 1024 * 8;

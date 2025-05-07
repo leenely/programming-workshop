@@ -97,4 +97,3 @@ list: list.o list.a
 stack: stack.o stack.a
 	gcc -g -static -o stack stack.o stack.a
 	./stack
-	
