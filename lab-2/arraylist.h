@@ -4,7 +4,7 @@
 #include "linear_alloc.h"
 
 typedef struct {
-  void *data;
+  char *data;
   size_t length;
   size_t capacity;
   size_t element_size;
