@@ -5,8 +5,7 @@
 #include "../linear_alloc.h"
 
 void run_simple_tests() {
-  linear_allocator *allocator =
-      linear_init(1024);
+  linear_allocator *allocator = linear_init(1024);
   ArrayList list;
 
   arraylist_init(&list, allocator, sizeof(int));
