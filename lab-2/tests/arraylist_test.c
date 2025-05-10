@@ -6,7 +6,7 @@
 
 void run_simple_tests() {
   linear_allocator *allocator =
-      linear_init(1024); // Выделяем аллокатор один раз
+      linear_init(1024);
   ArrayList list;
 
   arraylist_init(&list, allocator, sizeof(int));
