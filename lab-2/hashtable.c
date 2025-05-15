@@ -46,11 +46,12 @@ unsigned int MurmurHash2(const char *key, unsigned int len) {
   return h;
 }
 
-void hashtable_init(HashTable *table, size_t capacity,
-                    PoolAllocator *allocator) {
+void hashtable_init(HashTable *table, size_t capacity, PoolAllocator *allocator,
+                    size_t size_of_value) {
   table->capacity = capacity;
   table->allocator = allocator;
   table->buckets = calloc(capacity, sizeof(HashElem *));
+  table->size_of_value = sizeof(size_of_value);
 }
 
 void hashtable_insert(HashTable *table, const char *key, void *value) {
@@ -60,7 +61,7 @@ void hashtable_insert(HashTable *table, const char *key, void *value) {
   HashElem *elem = table->buckets[index];
   while (elem != NULL) {
     if (elem->key == key) {
-      elem->value = value;
+      memcpy(elem->value, value, table->size_of_value);
       return;
     }
     elem = elem->next;

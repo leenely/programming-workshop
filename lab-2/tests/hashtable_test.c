@@ -6,16 +6,16 @@ void test_basic_insert_get() {
   PoolAllocator alloc;
   pool_init(&alloc, sizeof(HashElem), 10);
   HashTable table;
-  hashtable_init(&table, 5, &alloc);
+  hashtable_init(&table, 5, &alloc, sizeof(int));
 
   int value1 = 42;
-  char value2 = 'a';
+  int value2 = -3;
 
-  hashtable_insert(&table, "answer", &value1);
-  hashtable_insert(&table, "char", &value2);
+  hashtable_insert(&table, "answer1", &value1);
+  hashtable_insert(&table, "answer2", &value2);
 
-  assert(*(int *)hashtable_get(&table, "answer") == 42);
-  assert(*(char *)hashtable_get(&table, "char") == 'a');
+  assert(*(int *)hashtable_get(&table, "answer1") == 42);
+  assert(*(int *)hashtable_get(&table, "answer2") == -3);
 
   hashtable_free(&table);
   pool_deinit(&alloc);
@@ -25,8 +25,7 @@ void test_collision_handling() {
   PoolAllocator alloc;
   pool_init(&alloc, sizeof(HashElem), 10);
   HashTable table;
-  hashtable_init(&table, 1, &alloc);
-
+  hashtable_init(&table, 1, &alloc, sizeof(char));
   char *str1 = "first";
   char *str2 = "second";
 
@@ -44,7 +43,7 @@ void test_update_value() {
   PoolAllocator alloc;
   pool_init(&alloc, sizeof(HashElem), 5);
   HashTable table;
-  hashtable_init(&table, 5, &alloc);
+  hashtable_init(&table, 5, &alloc, sizeof(int));
 
   int value1 = 100;
   int value2 = 200;
@@ -62,7 +61,7 @@ void test_delete() {
   PoolAllocator alloc;
   pool_init(&alloc, sizeof(HashElem), 5);
   HashTable table;
-  hashtable_init(&table, 5, &alloc);
+  hashtable_init(&table, 5, &alloc, sizeof(int));
 
   int value = 123;
   hashtable_insert(&table, "to_delete", &value);
