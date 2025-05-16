@@ -4,7 +4,7 @@ typedef struct FreeBlock {
   struct FreeBlock *next;
 } FreeBlock;
 
-typedef struct {
+typedef struct PoolAllocator {
   FreeBlock *free_list;
   void *pool_memory;
   size_t chunk_size;
