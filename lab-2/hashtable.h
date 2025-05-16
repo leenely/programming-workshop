@@ -1,3 +1,4 @@
+ feature/lab-2_hashtable
 #define HASHTABLE_H
 #include <stddef.h>
 
@@ -24,3 +25,6 @@ void hashtable_insert(HashTable *table, const char *key, void *value);
 void *hashtable_get(HashTable *table, const char *key);
 void hashtable_del(HashTable *table, const char *key);
 void hashtable_free(HashTable *table);
+=======
+// Ассоциативный массив
+ master

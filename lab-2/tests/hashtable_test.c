@@ -1,7 +1,6 @@
 #include "../hashtable.h"
-#include "../pool_alloc.h"
-#include <assert.h>
 
+ feature/lab-2_hashtable
 void test_basic_insert_get() {
   PoolAllocator alloc;
   pool_init(&alloc, sizeof(HashElem), 10);
@@ -81,3 +80,6 @@ int main() {
   test_delete();
   return 0;
 }
+=======
+int main() { return 0; }
+ master

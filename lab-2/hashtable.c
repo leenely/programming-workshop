@@ -1,3 +1,4 @@
+ feature/lab-2_hashtable
 #include "hashtable.h"
 #include "pool_alloc.h"
 #include <stdlib.h>
@@ -125,3 +126,6 @@ void hashtable_free(HashTable *table) {
   table->capacity = 0;
   table->size_of_value = 0;
 }
+=======
+// Ассоциативный массив
+ master
