@@ -51,7 +51,7 @@ void hashtable_init(HashTable *table, size_t capacity, PoolAllocator *allocator,
   table->capacity = capacity;
   table->allocator = allocator;
   table->buckets = calloc(capacity, sizeof(HashElem *));
-  table->size_of_value = sizeof(size_of_value);
+  table->size_of_value = size_of_value;
 }
 
 void hashtable_insert(HashTable *table, const char *key, void *value) {
@@ -120,4 +120,8 @@ void hashtable_free(HashTable *table) {
     }
   }
   free(table->buckets);
+  table->allocator = NULL;
+  table->buckets = NULL;
+  table->capacity = 0;
+  table->size_of_value = 0;
 }
