@@ -42,8 +42,8 @@ pool_alloc.a: pool_alloc.o
 arraylist_test.o: tests/arraylist_test.c arraylist.h
 	gcc -g -c tests/arraylist_test.c -o arraylist_test.o -lm
 
-arraylist_test: arraylist_test.o arraylist.a linear_alloc.a
-	gcc -g -o arraylist_test arraylist_test.o arraylist.a linear_alloc.a -lm
+arraylist_test: arraylist_test.o arraylist.a
+	gcc -g -static -o arraylist_test arraylist_test.o arraylist.a -lm
 
 hashtable_test.o: tests/hashtable_test.c hashtable.h
 	gcc -g -c tests/hashtable_test.c -o hashtable_test.o -lm
