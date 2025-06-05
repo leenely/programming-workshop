@@ -1,5 +1,5 @@
+#include "../../memory/pool_alloc.h"
 #include "../hashtable.h"
-#include "../pool_alloc.h"
 #include <assert.h>
 
 void test_basic_insert_get() {

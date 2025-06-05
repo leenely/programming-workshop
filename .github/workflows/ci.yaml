@@ -1,34 +1,21 @@
-# name: lab-1 ci-pipeline
+name: programming-workshop ci-pipeline
 
-# on:
-#   push:
-#   pull_request:
+on:
+  push:
+  pull_request:
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-#       # Без установки зависимостей почему-то не работает
-#       - name: Install dependencies
-#         run: sudo apt update && sudo apt install -y clang-format make
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y clang-format make valgrind
 
-#       # Лабораторная работа 1
-#       - name: Lab 1 - Check formatting
-#         working-directory: lab-1
-#         run: make check_fmt
+      - name: Check formatting
+        run: make check_fmt
 
-#       - name: Lab 1 - Run tests
-#         working-directory: lab-1
-#         run: make run_tests
-
-#       # Лабораторная работа 2
-#       - name: Lab 2 - Check formatting
-#         working-directory: lab-2
-#         run: make check_fmt
-
-#       - name: Lab 2 - Run tests
-#         working-directory: lab-2
-#         run: make run_tests
+      - name: Run tests
+        run: make run_tests

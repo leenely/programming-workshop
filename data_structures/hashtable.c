@@ -1,5 +1,5 @@
 #include "hashtable.h"
-#include "pool_alloc.h"
+#include "../memory/pool_alloc.h"
 #include <stdlib.h>
 #include <string.h>
 
