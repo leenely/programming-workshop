@@ -1,7 +1,7 @@
 #include "../garbage_collector.h"
 #include <assert.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void test_ref_counting_init() {
   ref_counting_init(10);
