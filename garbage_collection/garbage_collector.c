@@ -8,7 +8,7 @@ void ref_counting_init(size_t max_objects) {
   pool_init(&ref_count_allocator, sizeof(ref_count_t), max_objects);
 }
 
-ref_count_t *ref_count_create(void *object, void (*destructor)(void *)) {
+ref_count_t *ref_count_create(void *object, void (*constructor)(void *), void (*destructor)(void *)) {
   if (object == NULL)
     return NULL;
 
@@ -18,7 +18,13 @@ ref_count_t *ref_count_create(void *object, void (*destructor)(void *)) {
 
   rc->count = 1;
   rc->object = object;
+  rc->constructor = constructor;
   rc->destructor = destructor;
+
+  if(constructor) {
+    constructor(object);
+  }
+
   return rc;
 }
 

@@ -6,7 +6,7 @@
 void test_ref_counting_init() {
   ref_counting_init(10);
   void *obj = malloc(1);
-  ref_count_t *rc = ref_count_create(obj, NULL);
+  ref_count_t *rc = ref_count_create(obj, NULL, NULL);
   assert(rc != NULL);
   ref_count_dec(rc);
 }
@@ -15,7 +15,7 @@ void test_ref_count_create() {
   int *obj = malloc(sizeof(int));
   *obj = 42;
 
-  ref_count_t *rc = ref_count_create(obj, NULL);
+  ref_count_t *rc = ref_count_create(obj, NULL, NULL);
   assert(rc != NULL);
   assert(rc->count == 1);
   assert(rc->object == obj);
@@ -27,7 +27,7 @@ void test_ref_count_inc() {
   int *obj = malloc(sizeof(int));
   *obj = 42;
 
-  ref_count_t *rc = ref_count_create(obj, NULL);
+  ref_count_t *rc = ref_count_create(obj, NULL, NULL);
   ref_count_inc(rc);
   assert(rc->count == 2);
 
@@ -39,12 +39,12 @@ void test_ref_count_dec() {
   int *obj = malloc(sizeof(int));
   *obj = 42;
 
-  ref_count_t *rc = ref_count_create(obj, NULL);
+  ref_count_t *rc = ref_count_create(obj, NULL, NULL);
   ref_count_dec(rc);
 }
 
 void test_ref_count_create_null_object() {
-  ref_count_t *rc = ref_count_create(NULL, NULL);
+  ref_count_t *rc = ref_count_create(NULL, NULL, NULL);
   assert(rc == NULL);
 }
 
@@ -58,7 +58,7 @@ void test_no_memory_leak() {
   int *obj = malloc(sizeof(int));
   *obj = 42;
 
-  ref_count_t *rc = ref_count_create(obj, NULL);
+  ref_count_t *rc = ref_count_create(obj, NULL, NULL);
   ref_count_dec(rc);
   ref_counting_deinit();
 }
