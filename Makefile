@@ -142,8 +142,8 @@ destructor_test: destructor_test.o destructor.a
 garbage_collector_test.o: garbage_collection/tests/garbage_collector_test.c garbage_collection/garbage_collector.h
 	gcc -g -c garbage_collection/tests/garbage_collector_test.c -o garbage_collector_test.o -lm
 
-garbage_collector_test: garbage_collector_test.o garbage_collector.a
-	gcc -g -static -o garbage_collector_test garbage_collector_test.o garbage_collector.a -lm
+garbage_collector_test: garbage_collector_test.o garbage_collector.a pool_alloc.a
+	gcc -g -static -o garbage_collector_test garbage_collector_test.o garbage_collector.a pool_alloc.a -lm
 
 
 run_tests: quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
