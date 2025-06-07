@@ -147,17 +147,18 @@ garbage_collector_test: garbage_collector_test.o garbage_collector.a
 
 
 run_tests: quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
-	./quadratic_test
-	./integral_test
-	./list_test
-	./stack_test
-	./arraylist_test
-	./hashtable_test
-	./linear_alloc_test
-	./pool_alloc_test
-	./cycled_links_test
-	./destructor_test
-	./garbage_collector_test
+	valgrind --leak-check=full --show-leak-kinds=all ./quadratic_test
+	valgrind --leak-check=full --show-leak-kinds=all ./integral_test
+	valgrind --leak-check=full --show-leak-kinds=all ./list_test
+	valgrind --leak-check=full --show-leak-kinds=all ./stack_test
+	valgrind --leak-check=full --show-leak-kinds=all ./arraylist_test
+	valgrind --leak-check=full --show-leak-kinds=all ./hashtable_test
+	valgrind --leak-check=full --show-leak-kinds=all ./linear_alloc_test
+	valgrind --leak-check=full --show-leak-kinds=all ./pool_alloc_test
+	valgrind --leak-check=full --show-leak-kinds=all ./cycled_links_test
+	valgrind --leak-check=full --show-leak-kinds=all ./destructor_test
+	valgrind --leak-check=full --show-leak-kinds=all ./garbage_collector_test
+
 
 
 # -- Сборка без тестов
