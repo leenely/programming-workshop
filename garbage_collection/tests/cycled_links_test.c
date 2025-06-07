@@ -1,65 +1,33 @@
-// Обнаружение циклических ссылок
-#include "../cycled_links.h"
+#include "../garbage_collector.h"
 #include <assert.h>
+#include <stdlib.h>
 
-void test1() {
-  Object_system os;
-  init_object_system(&os, 3);
+static void test_cyclic_pair() {
+  ref_counting_init(2);
 
-  Object *obj1 = init_object(&os, 1);
-  Object *obj2 = init_object(&os, 2);
-  Object *obj3 = init_object(&os, 3);
-  Object *obj4 = init_object(&os, 4);
-  Object *obj5 = init_object(&os, 5);
+  int *obj1 = malloc(sizeof(int));
+  int *obj2 = malloc(sizeof(int));
 
-  set_link(obj1, obj4);
-  set_link(obj4, obj1);
-  set_link(obj2, obj3);
-  set_link(obj3, obj5);
+  ref_count_t *rc1 = ref_count_create(obj1);
+  ref_count_t *rc2 = ref_count_create(obj2);
 
-  assert(os.object_count == 5);
+  rc1->object = rc2;
+  rc2->object = rc1;
 
-  detect_cycles(&os);
-  cycles_collect(&os);
+  assert(rc1->count == 1);
+  assert(rc2->count == 1);
 
-  assert(os.object_count == 3);
+  garbage_collect(free);
 
-  deinit_object_system(&os);
-}
+  assert(rc1->count == 1);
+  assert(rc2->count == 1);
 
-void test2() {
-  Object_system os;
-  init_object_system(&os, 3);
+  collect_cycles(free);
 
-  Object *obj1 = init_object(&os, 1);
-  Object *obj2 = init_object(&os, 2);
-  Object *obj3 = init_object(&os, 3);
-  Object *obj4 = init_object(&os, 4);
-  Object *obj5 = init_object(&os, 5);
-  Object *obj6 = init_object(&os, 6);
-  Object *obj7 = init_object(&os, 7);
-  Object *obj8 = init_object(&os, 8);
-
-  set_link(obj1, obj3);
-  set_link(obj3, obj6);
-  set_link(obj6, obj5);
-  set_link(obj2, obj8);
-  set_link(obj8, obj2);
-  set_link(obj4, obj7);
-  set_link(obj7, obj4);
-
-  assert(os.object_count == 8);
-
-  detect_cycles(&os);
-  cycles_collect(&os);
-
-  assert(os.object_count == 4);
-
-  deinit_object_system(&os);
+  ref_counting_deinit();
 }
 
 int main() {
-  test1();
-  test2();
+  test_cyclic_pair();
   return 0;
 }
