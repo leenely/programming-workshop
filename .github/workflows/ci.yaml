@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt update && sudo apt install -y clang-format make valgrind
+        run: sudo apt update && sudo apt install -y clang-format make
 
       - name: Check formatting
         run: make check_fmt
