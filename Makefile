@@ -59,8 +59,8 @@ pool_alloc.o: memory/pool_alloc.c memory/pool_alloc.h
 pool_alloc.a: pool_alloc.o
 	ar rc pool_alloc.a pool_alloc.o -lm
 
-cycled_links.o: garbage_collection/cycled_links.c garbage_collection/cycled_links.h
-	gcc -g -c garbage_collection/cycled_links.c -o cycled_links.o -lm
+cycled_links.o: garbage_collection/garbage_collector.c garbage_collection/garbage_collector.h
+	gcc -g -c garbage_collection/garbage_collector.c -o cycled_links.o -lm
 
 cycled_links.a: cycled_links.o
 	ar rc cycled_links.a cycled_links.o -lm
@@ -127,7 +127,7 @@ pool_alloc_test.o: memory/tests/pool_alloc_test.c memory/pool_alloc.h
 pool_alloc_test: pool_alloc_test.o pool_alloc.a garbage_collector.a pool_alloc.a
 	gcc -g -static -o pool_alloc_test pool_alloc_test.o pool_alloc.a garbage_collector.a pool_alloc.a -lm
 
-cycled_links_test.o: garbage_collection/tests/cycled_links_test.c garbage_collection/cycled_links.h garbage_collection/garbage_collector.h
+cycled_links_test.o: garbage_collection/tests/cycled_links_test.c garbage_collection/garbage_collector.h
 	gcc -g -c garbage_collection/tests/cycled_links_test.c -o cycled_links_test.o -I.
 
 cycled_links_test: cycled_links_test.o cycled_links.a garbage_collector.a pool_alloc.a
