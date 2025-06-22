@@ -135,11 +135,11 @@ cycled_links_test.o: garbage_collection/tests/cycled_links_test.c garbage_collec
 cycled_links_test: cycled_links_test.o cycled_links.a
 	gcc -g -static -o cycled_links_test cycled_links_test.o cycled_links.a -lm
 
-destructor_test.o: garbage_collection/tests/destructor_test.c garbage_collection/destructor.h
+destructor_test.o: garbage_collection/tests/garbage_collector_test.c garbage_collection/garbage_collector.h
 	gcc -g -c garbage_collection/tests/destructor_test.c -o destructor_test.o -lm
 
-destructor_test: destructor_test.o destructor.a
-	gcc -g -static -o destructor_test destructor_test.o destructor.a -lm
+destructor_test: destructor_test.o garbage_collector.a pool_alloc.a
+	gcc -g -static -o destructor_test destructor_test.o garbage_collector.a pool_alloc.a -lm
 
 garbage_collector_test.o: garbage_collection/tests/garbage_collector_test.c garbage_collection/garbage_collector.h
 	gcc -g -c garbage_collection/tests/garbage_collector_test.c -o garbage_collector_test.o -lm
