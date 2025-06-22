@@ -1,3 +1,5 @@
+TEST_FILES := quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
+
 # -- Утилиты
 
 clear:
@@ -146,18 +148,10 @@ garbage_collector_test: garbage_collector_test.o garbage_collector.a
 	gcc -g -static -o garbage_collector_test garbage_collector_test.o garbage_collector.a -lm
 
 
-run_tests: quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
-	./quadratic_test
-	./integral_test
-	./list_test
-	./stack_test
-	./arraylist_test
-	./hashtable_test
-	./linear_alloc_test
-	./pool_alloc_test
-	./cycled_links_test
-	./destructor_test
-	./garbage_collector_test
+run_tests: $(TEST_FILES)
+	@for test in $(TEST_FILES); do \
+		valgrind --leak-check=full --show-leak-kinds=all ./$$test; \
+	done
 
 
 # -- Сборка без тестов
