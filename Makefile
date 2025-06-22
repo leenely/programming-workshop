@@ -1,3 +1,5 @@
+TEST_FILES := quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
+
 # -- Утилиты
 
 clear:
@@ -133,7 +135,7 @@ cycled_links_test.o: garbage_collection/tests/cycled_links_test.c garbage_collec
 cycled_links_test: cycled_links_test.o cycled_links.a garbage_collector.a pool_alloc.a
 	gcc -g -static -o cycled_links_test cycled_links_test.o cycled_links.a garbage_collector.a pool_alloc.a -lm
 
-destructor_test.o: garbage_collection/tests/destructor_test.c garbage_collection/destructor.h
+destructor_test.o: garbage_collection/tests/garbage_collector_test.c garbage_collection/garbage_collector.h
 	gcc -g -c garbage_collection/tests/destructor_test.c -o destructor_test.o -lm
 
 destructor_test: destructor_test.o destructor.a garbage_collector.a pool_alloc.a
@@ -146,18 +148,10 @@ garbage_collector_test: garbage_collector_test.o garbage_collector.a pool_alloc.
 	gcc -g -static -o garbage_collector_test garbage_collector_test.o garbage_collector.a pool_alloc.a -lm
 
 
-run_tests: quadratic_test integral_test list_test stack_test arraylist_test hashtable_test linear_alloc_test pool_alloc_test cycled_links_test destructor_test garbage_collector_test
-	valgrind --leak-check=full --show-leak-kinds=all ./quadratic_test
-	valgrind --leak-check=full --show-leak-kinds=all ./integral_test
-	valgrind --leak-check=full --show-leak-kinds=all ./list_test
-	valgrind --leak-check=full --show-leak-kinds=all ./stack_test
-	valgrind --leak-check=full --show-leak-kinds=all ./arraylist_test
-	valgrind --leak-check=full --show-leak-kinds=all ./hashtable_test
-	valgrind --leak-check=full --show-leak-kinds=all ./linear_alloc_test
-	valgrind --leak-check=full --show-leak-kinds=all ./pool_alloc_test
-	valgrind --leak-check=full --show-leak-kinds=all ./cycled_links_test
-	valgrind --leak-check=full --show-leak-kinds=all ./destructor_test
-	valgrind --leak-check=full --show-leak-kinds=all ./garbage_collector_test
+run_tests: $(TEST_FILES)
+	@for test in $(TEST_FILES); do \
+		valgrind --leak-check=full --show-leak-kinds=all ./$$test; \
+	done
 
 
 # -- Сборка без тестов
