@@ -8,8 +8,8 @@ static void test_cyclic_pair() {
   int *obj1 = malloc(sizeof(int));
   int *obj2 = malloc(sizeof(int));
 
-  ref_count_t *rc1 = ref_count_create(obj1);
-  ref_count_t *rc2 = ref_count_create(obj2);
+  ref_count_t *rc1 = ref_count_create(obj1, NULL, NULL);
+  ref_count_t *rc2 = ref_count_create(obj2, NULL, NULL);
 
   rc1->object = rc2;
   rc2->object = rc1;
